@@ -1,6 +1,6 @@
 import { IsEmail, IsString, Matches, MinLength } from "class-validator";
 
-export class CreateAuthDto {
+export class CreateUserDto {
     @IsString()
     name: string;
 
