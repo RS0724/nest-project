@@ -6,11 +6,11 @@ export class CreateUserDto {
     @IsString()
     name: string;
 
-    @ApiProperty({ example: 'rosesilva@gmail.com'})
+    @ApiProperty({ example: 'email@email.com'})
     @IsEmail()
     email: string;
 
-    @ApiProperty({ example: '@abcd123'})
+    @ApiProperty({ example: '@Abcd123'})
     @IsString()
     @MinLength(8, { message: 'Senha deve conter 8 digitos' })
     @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
@@ -18,7 +18,7 @@ export class CreateUserDto {
   })
     password: string;
 
-    @ApiProperty({ example: 'Link'})
+    @ApiProperty({ example: 'link.com/jpg.jpg'})
     @IsString()
     picture: string;
 }
