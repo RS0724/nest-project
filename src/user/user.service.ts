@@ -26,21 +26,35 @@ export class UserService {
     return data;
   }
 
-  async findOne(id: string) {
+  async findOne(id?: string, email?: string) {
     try {
-    const data: User = await this.prismaService.user.findUnique({
-      where: {id},
-    });
-    
-    delete data.password; //comando para remover a senha do objeto
+  //     if(id) {
+  //   const data: User = await this.prismaService.user.findUnique({
+  //     where: {id},
+  //   });
+  //  delete data.password
+  //   return data;
+  // } else  {
+  //   const data: User = await this.prismaService.user.findUnique({
+  //     where: { email },
+  //   });
 
-    return data;
+  //   return data;
+  // }
 
+  const data: User = await this.prismaService.user.findUnique({
+    where: id ? { id } : {email} , // ternário tipo de if reduzido
+  });
+  id ? delete data.password : null; 
+  return data;
+
+    // delete data.password; //comando para remover a senha do objeto
+  
   } catch (error){
-
-  return "Id de usuário não existente !";
+    
+    throw Error('Id de usuário não existente !');
   }
-
+  
 }
 
   async update(id: string, updateAuthDto: UpdateUserDto) {
