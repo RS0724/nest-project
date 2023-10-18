@@ -12,9 +12,12 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Nest-Project')
+    .setVersion('1.0.0')
     .addServer('http://localhost:3000', 'Local')
     .addTag('Status')
+    .addTag('Auth')
     .addTag('User')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
