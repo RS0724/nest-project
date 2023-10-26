@@ -10,9 +10,13 @@ export class TelegramContorller {
 
   @Post('send')
   @ApiOperation({summary: "enviar mensagem telegram"})
-  sendMessage(
-    @Body() dtoMessage: sendMessageDto
-  ) {
-    this.telegramService.sendTelegrafText(dtoMessage)
+  async sendMessage(@Body() dtoMessage: sendMessageDto) {
+    await this.telegramService.sendTelegrafText(dtoMessage);
+  }
+
+  @Post('send-midia')
+  @ApiOperation({summary: "enviar mensagem telegram com imagem"})
+  async sendMessageMidia(@Body() dtoMessage: sendMessageDto) {
+    await this.telegramService.sendTelegrafMedia(dtoMessage)
   }
 }

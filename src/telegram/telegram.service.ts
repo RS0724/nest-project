@@ -28,12 +28,12 @@ export class telegramService {
       console.log('sendTelegrafTexto:', error);
     }
   }
-  async sendTelegrafMedia(
-    message: string,
-    chatid: string,
-    tokenbot: string,
-    images: string[],
-  ) {
+  async sendTelegrafMedia({
+    message,
+    chatid,
+    tokenbot,
+    images,
+}: sendMessageDto) {
     const bot = new Telegraf(tokenbot);
     const media: MediaGroup = images.map((image) =>({
         type: "photo",
