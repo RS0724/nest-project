@@ -11,7 +11,7 @@ export class TelegramContorller {
   @Post('send')
   @ApiOperation({summary: "enviar mensagem telegram"})
   async sendMessage(@Body() dtoMessage: SendMessageDto) {
-    await this.telegramService.sendMessageSwitch(dtoMessage);
+    await this.telegramService.sendSchedule(dtoMessage);
   }
 
   }

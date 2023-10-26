@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Telegraf } from 'telegraf';
 import { SendMessageDto } from './dto/sendMessage.dto';
 import { MediaGroup } from 'telegraf/typings/telegram-types';
+import * as cron from 'node-cron'
 
 @Injectable()
 export class telegramService {
@@ -29,6 +30,7 @@ export class telegramService {
     chatid,
     tokenbot,
     images,
+
   }: SendMessageDto) {
     const bot = new Telegraf(tokenbot);
     const media: MediaGroup = images.map((image) => ({
@@ -45,9 +47,28 @@ export class telegramService {
   }
 
 
-  async sendMessageSwitch(sendMessageDto: SendMessageDto) {
+  private async sendMessageSwitch(sendMessageDto: SendMessageDto) {
     sendMessageDto.images
       ? this.sendTelegrafMedia(sendMessageDto)
       : this.sendTelegrafText(sendMessageDto);
+  }
+
+
+
+  private cronConvert(schedule: string | Date): string {
+    schedule = new Date(schedule);
+    const day = schedule.getDate();
+    const month = schedule.getMonth() +1;
+    const years = schedule.getFullYear();
+    const hour = schedule.getHours();
+    const minuts = schedule.getMinutes();
+    return `${minuts} ${hour} ${day} ${month} *`;
+  }
+
+  async sendSchedule(sendMessageDto: SendMessageDto) {
+    const cronConvertTime = this.cronConvert(sendMessageDto.schedule)
+    cron.schedule(cronConvertTime, async ()=> {
+      await this.sendMessageSwitch(sendMessageDto);
+    })
   }
 }
