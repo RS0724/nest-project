@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsString, Matches, MinLength } from "class-validator";
+import { IsEmail, IsEmpty, IsInt, IsOptional, IsString, Matches, MinLength, isEmpty } from "class-validator";
 
 export class CreateUserDto {
     @ApiProperty({ example: 'Rose Silva'})
@@ -21,4 +21,9 @@ export class CreateUserDto {
     @ApiProperty({ example: 'link.com/jpg.jpg'})
     @IsString()
     picture: string;
+
+    @ApiProperty({ example: 359450})
+    @IsOptional()
+    @IsInt()
+    token?: number
 }

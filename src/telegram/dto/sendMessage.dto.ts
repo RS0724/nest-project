@@ -13,6 +13,6 @@ export class SendMessageDto{
     @ApiProperty({example: []})
     images: string[] | undefined
 
-    @ApiProperty({example: "2023-10-26T20:40:00"})
+    @ApiProperty({example: "2023-10-26T20:40:00n"})
     schedule: string | Date
 }
