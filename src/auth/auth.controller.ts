@@ -11,7 +11,7 @@
 //     async login(@Request() req) {
 //       return req.user;
 //     }
-    
+
 // }
 import {
   Body,
@@ -21,7 +21,7 @@ import {
   HttpStatus,
   Post,
   Request,
-  UseGuards
+  UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { loginDto } from './dto/login.dto';
@@ -38,14 +38,24 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Post('login')
   async signIn(@Body() loginDto: loginDto) {
-    const user: User = await this.authService.validateUser(loginDto.email, loginDto.password)
-    return this.authService.login(user)
+    const user: User = await this.authService.validateUser(
+      loginDto.email,
+      loginDto.password,
+    );
+    return this.authService.login(user);
   }
 
   @Post('login-recover')
   async signInRecover(@Body() recoverDto: SignInRecoverDto) {
-    const user: User = await this.authService.validateUser(recoverDto.email,undefined, recoverDto.token)
-    return this.authService.login(user)
+    const user: User = await this.authService.validateUser(
+      recoverDto.email,
+      undefined,
+      recoverDto.token,
+    );
+    return {
+      access_token: (await this.authService.login(user)).access_token,
+      ...user,
+    };
   }
 
   @UseGuards(AuthGuard)
